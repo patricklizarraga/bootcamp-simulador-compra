@@ -1,0 +1,76 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+
+<form th:action="@{/enviarConsulta}" th:object="${user}" method="POST">
+    <span th:if="${user.id != null}"><input type="text" th:field="${user.id}" readonly></span><br>
+    <input type="text" placeholder="User" th:field="${user.nombreUsuario}"><br>
+    <input type="text" placeholder="Name" th:field="${user.nombreCompleto}"><br>
+    <input type="text" placeholder="Dni" th:field="${user.dniUsuario}"><br>
+    <select name="tipoTarjeta" th:field="${user.tipoTarjeta}">
+        <option value="Clasica">Clasica</option>
+        <option value="Oro">Oro</option>
+        <option value="Black">Black</option>
+    </select><br>
+    <select name="codigoMoneda" th:field="${user.codigoMoneda}">
+        <option value="S/">S/</option>
+        <option value="US$">US$</option>
+    </select><br>
+    <input type="text" placeholder="Monto" th:field="${user.montoCompra}"><br>
+    <select name="cuotaCompra" th:field="${user.cuotaCompra}">
+        <option th:each="i: ${#numbers.sequence(1,36)}" th:value="${i}" th:text="${i}"></option>
+    </select><br>
+    <select name="teaCompra" th:field="${user.teaCompra}">
+        <option value="99.90">99.90%</option>
+        <option value="95.90">95.90%</option>
+        <option value="90.90">90.90%</option>
+    </select><br>
+    <select name="diaPago" th:field="${user.diaPago}">
+        <option value="5">5</option>
+        <option value="20">20</option>
+    </select><br>
+    <input type="Submit" th:value="${user.id != null}?'Actualizar datos':'Enviar Consulta'">
+</form>
+
+<table border = 1>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Name</th>
+            <th>DNI</th>
+            <th>Tipo de tarjeta</th>
+            <th>Moneda</th>
+            <th>Monto</th>
+            <th>Cuota</th>
+            <th>TEA</th>
+            <th>Día de Pago</th>
+            <th>Total Cuota</th>
+            <th>Primera Cuota</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.nombreUsuario}"></td>
+            <td th:text="${user.nombreCompleto}"></td>
+            <td th:text="${user.dniUsuario}"></td>
+            <td th:text="${user.tipoTarjeta}"></td>
+            <td th:text="${user.codigoMoneda}"></td>
+            <td th:text="${user.montoCompra}"></td>
+            <td th:text="${user.cuotaCompra}"></td>
+            <td th:text="${user.teaCompra}"></td>
+            <td th:text="${user.diaPago}"></td>
+            <td></td>
+            <td></td>
+            <td>EXITOSO</td>
+            <td>
+                <a th:href="@{'/editarConsulta/' + ${user.id}}"> Editar </a> |
+                <a th:href="@{'/eliminarConsulta/' + ${user.id}}"> Eliminar </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>
